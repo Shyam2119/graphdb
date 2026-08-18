@@ -1,0 +1,43 @@
+# Secrets — NEVER commit
+.env
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.eggs/
+dist/
+build/
+
+# Virtual environments
+.venv/
+venv/
+
+# Raw downloaded data (can be regenerated with `graph-bench prepare`)
+data/raw/
+
+# Processed CSV data (regenerated; commit only .gitkeep)
+data/processed/*.csv
+data/processed/*.gz
+!data/processed/.gitkeep
+
+# Timestamped benchmark result archives (keep only REPORT.md and charts)
+results/benchmark_*.json
+results/run_metadata.json
+
+# Allow the canonical report and charts to be committed
+!results/REPORT.md
+!results/latest.json
+!results/charts/
+!results/charts/*.png
+
+# Tool caches and IDE files
+*.log
+.DS_Store
+Thumbs.db
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+htmlcov/
+.coverage

@@ -1,0 +1,86 @@
+{
+  "mock": {
+    "platform_key": "mock",
+    "platform_name": "Mock (dry-run)",
+    "load": {
+      "wall_clock_seconds": 0.48,
+      "nodes_loaded": 74062,
+      "relationships_loaded": 150000,
+      "nodes_per_second": 154034.0,
+      "relationships_per_second": 311969.8,
+      "method": "in-memory adjacency list (dry-run)"
+    },
+    "traversals": {
+      "1_hop": {
+        "p50_ms": 0.0061499958974309266,
+        "p95_ms": 0.01320501251029782,
+        "mean_ms": 0.007400000322377309,
+        "iterations": 20,
+        "errors": 0
+      },
+      "2_hop": {
+        "p50_ms": 0.09100000897888094,
+        "p95_ms": 0.4125099963857793,
+        "mean_ms": 0.1496950011642184,
+        "iterations": 20,
+        "errors": 0
+      },
+      "3_hop": {
+        "p50_ms": 1.1788999909185804,
+        "p95_ms": 7.990260003134608,
+        "mean_ms": 1.9015300000319257,
+        "iterations": 20,
+        "errors": 0
+      }
+    },
+    "lookups": {
+      "point_lookup": {
+        "p50_ms": 0.00100000761449337,
+        "p95_ms": 0.023420000070473457,
+        "mean_ms": 0.02095000381814316,
+        "iterations": 20,
+        "errors": 0
+      },
+      "filtered_lookup": {
+        "p50_ms": 2.7790500098490156,
+        "p95_ms": 4.498300003615441,
+        "mean_ms": 3.1330950019764714,
+        "iterations": 20,
+        "errors": 0
+      }
+    },
+    "aggregations": {
+      "group_by_community": {
+        "p50_ms": 36.06769999896642,
+        "p95_ms": 46.01345999326442,
+        "mean_ms": 37.70008999927086,
+        "iterations": 20,
+        "errors": 0
+      }
+    },
+    "mixed_workload": {
+      "concurrency_1": {
+        "queries_per_second": 535.8,
+        "duration_seconds": 5,
+        "total_queries": 2679,
+        "errors": 0,
+        "concurrency": 1
+      },
+      "concurrency_4": {
+        "queries_per_second": 2179.6,
+        "duration_seconds": 5,
+        "total_queries": 10898,
+        "errors": 0,
+        "concurrency": 4
+      }
+    },
+    "footprint": {
+      "stored_data_size": "74062 nodes, 141917 edges",
+      "memory_usage": "in-process Python",
+      "instance_specs": "mock (not a real database)",
+      "notes": ""
+    },
+    "caveats": [],
+    "cold_start_ms": 0.41
+  }
+}

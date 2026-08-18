@@ -1,0 +1,10 @@
+{
+  "source": "SNAP Stanford soc-Pokec (sampled)",
+  "source_url": "https://snap.stanford.edu/data/soc-Pokec.html",
+  "origin_file": "https://snap.stanford.edu/data/soc-pokec-relationships.txt.gz",
+  "node_count": 74062,
+  "relationship_count": 150000,
+  "file_sha256": "1a23e0ec8a4e497752125f6b3f01696fea7fcdb696fa61d1e822faf4d0d69b14",
+  "node_label": "Person",
+  "relationship_type": "FRIEND"
+}

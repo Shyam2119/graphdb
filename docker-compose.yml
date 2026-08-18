@@ -1,0 +1,29 @@
+version: "3.8"
+
+# Self-hosted platforms capped to CognoDB c0 free-tier parity:
+# 0.5 vCPU, 256 MB RAM. Compose v2 honors cpus/mem_limit without Swarm.
+services:
+  memgraph:
+    image: memgraph/memgraph:2.18.1
+    ports:
+      - "7687:7687"
+    cpus: 0.50
+    mem_limit: 256m
+    command: ["--memory-limit=200", "--storage-mode=IN_MEMORY_TRANSACTIONAL"]
+
+  falkordb:
+    image: falkordb/falkordb:v4.10.2
+    ports:
+      - "6379:6379"
+    cpus: 0.50
+    mem_limit: 256m
+    command: ["--maxmemory", "200mb", "--maxmemory-policy", "noeviction"]
+
+  arangodb:
+    image: arangodb:3.11.10
+    ports:
+      - "8529:8529"
+    environment:
+      ARANGO_ROOT_PASSWORD: graphbench
+    cpus: 0.50
+    mem_limit: 256m

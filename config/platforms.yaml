@@ -1,0 +1,87 @@
+# Resource parity target (matches CognoDB free c0 tier)
+reference_tier:
+  name: CognoDB c0 Free
+  vcpu: 0.5
+  ram_mb: 256
+  storage_gb: 1
+
+platforms:
+  cognodb:
+    name: CognoDB Cloud
+    driver: neo4j
+    tier: c0 Free
+    vcpu: 0.5
+    ram_mb: 256
+    storage_gb: 1
+    protocol: bolt+s
+    indexed_properties:
+      - Person.id
+      - Person.community
+    notes: "Neo4j-compatible Bolt API; free tier, no credit card."
+
+  neo4j:
+    name: Neo4j Aura Free
+    driver: neo4j
+    tier: AuraDB Free
+    vcpu: "shared"
+    ram_mb: "~256 (instance memory limit)"
+    storage_gb: "~0.5 (node/rel limits apply)"
+    protocol: neo4j+s
+    indexed_properties:
+      - Person.id
+      - Person.community
+    notes: "Managed free tier; node/relationship caps apply."
+
+  memgraph:
+    name: Memgraph
+    driver: neo4j
+    tier: Docker (capped)
+    vcpu: 0.5
+    ram_mb: 256
+    storage_gb: 1
+    protocol: bolt
+    indexed_properties:
+      - Person.id
+      - Person.community
+    notes: "Self-hosted via docker-compose with cgroup limits."
+
+  falkordb:
+    name: FalkorDB
+    driver: falkordb
+    tier: Docker (capped)
+    vcpu: 0.5
+    ram_mb: 256
+    storage_gb: 1
+    protocol: redis
+    indexed_properties:
+      - Person.id
+      - Person.community
+    notes: "Redis-protocol graph; Cypher subset via FalkorDB."
+
+  arangodb:
+    name: ArangoDB
+    driver: arango
+    tier: Docker (capped)
+    vcpu: 0.5
+    ram_mb: 256
+    storage_gb: 1
+    protocol: http
+    indexed_properties:
+      - Person.id
+      - Person.community
+    notes: "Multi-model; AQL queries for graph traversals."
+
+dataset:
+  source: "SNAP Stanford soc-Pokec (sampled)"
+  source_url: "https://snap.stanford.edu/data/soc-Pokec.html"
+  target_relationships: 150000
+  node_label: Person
+  relationship_type: FRIEND
+
+benchmark:
+  warmup_iterations: 10
+  read_iterations: 100
+  batch_size: 1000
+  mixed_duration_seconds: 60
+  concurrency_levels: [1, 10, 40]
+  read_write_ratio: "80/20"
