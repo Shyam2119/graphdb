@@ -14,7 +14,7 @@ services:
   falkordb:
     image: falkordb/falkordb:v4.10.2
     ports:
-      - "6379:6379"
+      - "6380:6379"
     cpus: 0.50
     mem_limit: 256m
     command: ["--maxmemory", "200mb", "--maxmemory-policy", "noeviction"]

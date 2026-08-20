@@ -1,0 +1,93 @@
+{
+  "falkordb": {
+    "platform_key": "falkordb",
+    "platform_name": "FalkorDB",
+    "load": {
+      "wall_clock_seconds": 24.41,
+      "nodes_loaded": 74062,
+      "relationships_loaded": 150000,
+      "nodes_per_second": 3033.7,
+      "relationships_per_second": 6144.3,
+      "method": "FalkorDB Cypher UNWIND batch (1000 rows/batch)"
+    },
+    "traversals": {
+      "1_hop": {
+        "p50_ms": 1.1242000036872923,
+        "p95_ms": 2.09475499286782,
+        "mean_ms": 1.231542999157682,
+        "iterations": 100,
+        "errors": 0
+      },
+      "2_hop": {
+        "p50_ms": 3.385200005141087,
+        "p95_ms": 14.486674986255784,
+        "mean_ms": 5.725164000468794,
+        "iterations": 100,
+        "errors": 0
+      },
+      "3_hop": {
+        "p50_ms": 218.52740002213977,
+        "p95_ms": 834.4093000050634,
+        "mean_ms": 295.5031439548123,
+        "iterations": 91,
+        "errors": 9
+      }
+    },
+    "lookups": {
+      "point_lookup": {
+        "p50_ms": 1.4584000164177269,
+        "p95_ms": 3.9499849983258146,
+        "mean_ms": 1.7971759993815795,
+        "iterations": 100,
+        "errors": 0
+      },
+      "filtered_lookup": {
+        "p50_ms": 1.7626999906497076,
+        "p95_ms": 9.0484049913357,
+        "mean_ms": 2.8812939996714704,
+        "iterations": 100,
+        "errors": 0
+      }
+    },
+    "aggregations": {
+      "group_by_community": {
+        "p50_ms": 686.1950999882538,
+        "p95_ms": 824.5894349995069,
+        "mean_ms": 678.5976870002924,
+        "iterations": 100,
+        "errors": 0
+      }
+    },
+    "mixed_workload": {
+      "concurrency_1": {
+        "queries_per_second": 377.3666666666667,
+        "duration_seconds": 60,
+        "total_queries": 22642,
+        "errors": 0,
+        "concurrency": 1
+      },
+      "concurrency_10": {
+        "queries_per_second": 1094.45,
+        "duration_seconds": 60,
+        "total_queries": 65667,
+        "errors": 0,
+        "concurrency": 10
+      },
+      "concurrency_40": {
+        "queries_per_second": 967.75,
+        "duration_seconds": 60,
+        "total_queries": 58065,
+        "errors": 78,
+        "concurrency": 40
+      }
+    },
+    "footprint": {
+      "stored_data_size": "74,062 nodes, 150,000 relationships",
+      "memory_usage": "31.49M",
+      "instance_specs": "Docker 0.5 vCPU / 256 MB (see docker-compose.yml)",
+      "notes": ""
+    },
+    "caveats": [],
+    "cold_start_ms": 6.95
+  }
+}

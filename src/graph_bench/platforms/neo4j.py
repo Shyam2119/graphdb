@@ -31,6 +31,10 @@ class Neo4jPlatform(GraphPlatform):
         "neo4j": ("NEO4J_URI", "NEO4J_USER", "NEO4J_PASSWORD"),
         "memgraph": ("MEMGRAPH_URI", "MEMGRAPH_USER", "MEMGRAPH_PASSWORD"),
     }
+    # Optional named database (Aura uses the instance ID as the DB name)
+    DB_MAP = {
+        "neo4j": "NEO4J_DATABASE",
+    }
 
     def __init__(self, platform_key: str, platform_name: str, batch_size: int = 1000):
         super().__init__(platform_key, platform_name, batch_size)
@@ -38,13 +42,21 @@ class Neo4jPlatform(GraphPlatform):
         self.uri = os.getenv(uri_key, "")
         self.user = os.getenv(user_key, "") or None
         self.password = os.getenv(pass_key, "") or None
+        self.database = os.getenv(self.DB_MAP.get(platform_key, ""), None) or None
         if not self.uri:
             raise ValueError(f"Missing {uri_key} in environment")
         self._driver: Driver | None = None
 
     def connect(self) -> None:
         auth = (self.user, self.password) if self.user else None
-        self._driver = GraphDatabase.driver(self.uri, auth=auth)
+        # CognoDB's bolt+s:// endpoint uses TLS but its certificate chain does not
+        # verify against Python's default CA store.  Switching to bolt+ssc:// keeps
+        # the connection encrypted but skips CA-chain validation.  Documented as a
+        # caveat in the benchmark report.
+        uri = self.uri
+        if self.platform_key == "cognodb" and uri.startswith("bolt+s://"):
+            uri = uri.replace("bolt+s://", "bolt+ssc://", 1)
+        self._driver = GraphDatabase.driver(uri, auth=auth)
         self._driver.verify_connectivity()
 
     def close(self) -> None:
@@ -55,6 +67,8 @@ class Neo4jPlatform(GraphPlatform):
     def _session(self):
         if not self._driver:
             raise RuntimeError("Not connected")
+        if self.database:
+            return self._driver.session(database=self.database)
         return self._driver.session()
 
     def clear_database(self) -> None:

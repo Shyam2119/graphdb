@@ -1,0 +1,93 @@
+{
+  "memgraph": {
+    "platform_key": "memgraph",
+    "platform_name": "Memgraph",
+    "load": {
+      "wall_clock_seconds": 9.77,
+      "nodes_loaded": 74062,
+      "relationships_loaded": 150000,
+      "nodes_per_second": 7581.6,
+      "relationships_per_second": 15355.2,
+      "method": "Neo4j Python driver UNWIND batch MERGE (1000 rows/batch)"
+    },
+    "traversals": {
+      "1_hop": {
+        "p50_ms": 2.508350007701665,
+        "p95_ms": 4.893945016374346,
+        "mean_ms": 2.6704549984424375,
+        "iterations": 100,
+        "errors": 0
+      },
+      "2_hop": {
+        "p50_ms": 4.667700006393716,
+        "p95_ms": 16.644324982189566,
+        "mean_ms": 7.267866998736281,
+        "iterations": 100,
+        "errors": 0
+      },
+      "3_hop": {
+        "p50_ms": 86.20869999867864,
+        "p95_ms": 401.05893001309596,
+        "mean_ms": 119.98410600004718,
+        "iterations": 100,
+        "errors": 0
+      }
+    },
+    "lookups": {
+      "point_lookup": {
+        "p50_ms": 0.9272500028600916,
+        "p95_ms": 2.336560006369836,
+        "mean_ms": 1.131004999333527,
+        "iterations": 100,
+        "errors": 0
+      },
+      "filtered_lookup": {
+        "p50_ms": 1.47570000262931,
+        "p95_ms": 2.358044986613095,
+        "mean_ms": 1.571169999660924,
+        "iterations": 100,
+        "errors": 0
+      }
+    },
+    "aggregations": {
+      "group_by_community": {
+        "p50_ms": 290.0164000020595,
+        "p95_ms": 371.05621499649715,
+        "mean_ms": 281.4343310004915,
+        "iterations": 100,
+        "errors": 0
+      }
+    },
+    "mixed_workload": {
+      "concurrency_1": {
+        "queries_per_second": 363.15,
+        "duration_seconds": 60,
+        "total_queries": 21789,
+        "errors": 0,
+        "concurrency": 1
+      },
+      "concurrency_10": {
+        "queries_per_second": 889.1,
+        "duration_seconds": 60,
+        "total_queries": 53346,
+        "errors": 1,
+        "concurrency": 10
+      },
+      "concurrency_40": {
+        "queries_per_second": 1087.0666666666666,
+        "duration_seconds": 60,
+        "total_queries": 65224,
+        "errors": 4,
+        "concurrency": 40
+      }
+    },
+    "footprint": {
+      "stored_data_size": "74,062 nodes, 150,000 relationships (logical)",
+      "memory_usage": "capped at 256 MB via docker compose",
+      "instance_specs": "see config/platforms.yaml",
+      "notes": "Cloud consoles may expose additional metrics."
+    },
+    "caveats": [],
+    "cold_start_ms": 42.01
+  }
+}
