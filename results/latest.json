@@ -1,86 +1,457 @@
 {
-  "mock": {
-    "platform_key": "mock",
-    "platform_name": "Mock (dry-run)",
+  "arangodb": {
+    "platform_key": "arangodb",
+    "platform_name": "ArangoDB",
     "load": {
-      "wall_clock_seconds": 0.48,
+      "wall_clock_seconds": 17.48,
       "nodes_loaded": 74062,
       "relationships_loaded": 150000,
-      "nodes_per_second": 154034.0,
-      "relationships_per_second": 311969.8,
-      "method": "in-memory adjacency list (dry-run)"
+      "nodes_per_second": 4236.5,
+      "relationships_per_second": 8580.4,
+      "method": "ArangoDB import_bulk (1000 docs/batch)"
     },
     "traversals": {
       "1_hop": {
-        "p50_ms": 0.0061499958974309266,
-        "p95_ms": 0.01320501251029782,
-        "mean_ms": 0.007400000322377309,
-        "iterations": 20,
+        "p50_ms": 50.0301499851048,
+        "p95_ms": 62.26892502454575,
+        "mean_ms": 51.82531799946446,
+        "iterations": 100,
         "errors": 0
       },
       "2_hop": {
-        "p50_ms": 0.09100000897888094,
-        "p95_ms": 0.4125099963857793,
-        "mean_ms": 0.1496950011642184,
-        "iterations": 20,
+        "p50_ms": 64.04549999570008,
+        "p95_ms": 116.24339999543736,
+        "mean_ms": 69.08890200254973,
+        "iterations": 100,
         "errors": 0
       },
       "3_hop": {
-        "p50_ms": 1.1788999909185804,
-        "p95_ms": 7.990260003134608,
-        "mean_ms": 1.9015300000319257,
-        "iterations": 20,
+        "p50_ms": 1289.925899996888,
+        "p95_ms": 6629.929245005769,
+        "mean_ms": 1960.8905600011349,
+        "iterations": 100,
         "errors": 0
       }
     },
     "lookups": {
       "point_lookup": {
-        "p50_ms": 0.00100000761449337,
-        "p95_ms": 0.023420000070473457,
-        "mean_ms": 0.02095000381814316,
-        "iterations": 20,
+        "p50_ms": 50.05094999796711,
+        "p95_ms": 59.51836001186166,
+        "mean_ms": 50.53071299887961,
+        "iterations": 100,
         "errors": 0
       },
       "filtered_lookup": {
-        "p50_ms": 2.7790500098490156,
-        "p95_ms": 4.498300003615441,
-        "mean_ms": 3.1330950019764714,
-        "iterations": 20,
+        "p50_ms": 50.38369999965653,
+        "p95_ms": 61.51171501114732,
+        "mean_ms": 52.06874199968297,
+        "iterations": 100,
         "errors": 0
       }
     },
     "aggregations": {
       "group_by_community": {
-        "p50_ms": 36.06769999896642,
-        "p95_ms": 46.01345999326442,
-        "mean_ms": 37.70008999927086,
-        "iterations": 20,
+        "p50_ms": 1911.7086999904132,
+        "p95_ms": 2434.7204299876466,
+        "mean_ms": 1949.4479550007964,
+        "iterations": 100,
         "errors": 0
       }
     },
     "mixed_workload": {
       "concurrency_1": {
-        "queries_per_second": 535.8,
-        "duration_seconds": 5,
-        "total_queries": 2679,
+        "queries_per_second": 19.0,
+        "duration_seconds": 60,
+        "total_queries": 1140,
         "errors": 0,
         "concurrency": 1
       },
-      "concurrency_4": {
-        "queries_per_second": 2179.6,
-        "duration_seconds": 5,
-        "total_queries": 10898,
+      "concurrency_10": {
+        "queries_per_second": 180.08333333333334,
+        "duration_seconds": 60,
+        "total_queries": 10805,
+        "errors": 2,
+        "concurrency": 10
+      },
+      "concurrency_40": {
+        "queries_per_second": 397.78333333333336,
+        "duration_seconds": 60,
+        "total_queries": 23867,
         "errors": 0,
-        "concurrency": 4
+        "concurrency": 40
       }
     },
     "footprint": {
-      "stored_data_size": "74062 nodes, 141917 edges",
-      "memory_usage": "in-process Python",
-      "instance_specs": "mock (not a real database)",
+      "stored_data_size": "74,062 vertices, 150,000 edges",
+      "memory_usage": "not observable (community edition)",
+      "instance_specs": "Docker 0.5 vCPU / 256 MB (see docker-compose.yml)",
       "notes": ""
     },
     "caveats": [],
-    "cold_start_ms": 0.41
+    "cold_start_ms": 67.27
+  },
+  "cognodb": {
+    "platform_key": "cognodb",
+    "platform_name": "CognoDB Cloud",
+    "load": {
+      "wall_clock_seconds": 80.18,
+      "nodes_loaded": 74062,
+      "relationships_loaded": 150000,
+      "nodes_per_second": 923.7,
+      "relationships_per_second": 1870.8,
+      "method": "Neo4j Python driver UNWIND batch MERGE (1000 rows/batch)"
+    },
+    "traversals": {
+      "1_hop": {
+        "p50_ms": 252.29114999820013,
+        "p95_ms": 259.10036002023844,
+        "mean_ms": 253.4294159989804,
+        "iterations": 100,
+        "errors": 0
+      },
+      "2_hop": {
+        "p50_ms": 263.7484499864513,
+        "p95_ms": 379.4001150046824,
+        "mean_ms": 286.11007000057725,
+        "iterations": 100,
+        "errors": 0
+      },
+      "3_hop": {
+        "p50_ms": 2184.123199986061,
+        "p95_ms": 6306.8844699912,
+        "mean_ms": 2847.2189565174,
+        "iterations": 23,
+        "errors": 77
+      }
+    },
+    "lookups": {
+      "point_lookup": {
+        "p50_ms": 243.877649991191,
+        "p95_ms": 247.88254999293713,
+        "mean_ms": 254.90592083345595,
+        "iterations": 96,
+        "errors": 4
+      },
+      "filtered_lookup": {
+        "p50_ms": 245.98720000358298,
+        "p95_ms": 469.41240500163985,
+        "mean_ms": 277.3427850016742,
+        "iterations": 100,
+        "errors": 0
+      }
+    },
+    "aggregations": {
+      "group_by_community": {
+        "p50_ms": 2301.1328499997035,
+        "p95_ms": 2434.042229989427,
+        "mean_ms": 2311.50384599925,
+        "iterations": 100,
+        "errors": 0
+      }
+    },
+    "mixed_workload": {
+      "concurrency_1": {
+        "queries_per_second": 4.05,
+        "duration_seconds": 60,
+        "total_queries": 243,
+        "errors": 0,
+        "concurrency": 1
+      },
+      "concurrency_10": {
+        "queries_per_second": 39.3,
+        "duration_seconds": 60,
+        "total_queries": 2358,
+        "errors": 0,
+        "concurrency": 10
+      },
+      "concurrency_40": {
+        "queries_per_second": 123.56666666666666,
+        "duration_seconds": 60,
+        "total_queries": 7414,
+        "errors": 1318,
+        "concurrency": 40
+      }
+    },
+    "footprint": {
+      "stored_data_size": "not observable",
+      "memory_usage": "not observable",
+      "instance_specs": "see config/platforms.yaml",
+      "notes": "Couldn't connect to db-e01bc678.bravo.databases.cognodb.com:7687 (resolved to ('136.70.132.96:7687',)):\nFailed to establish connection to ResolvedIPv4Address(('136.70.132.96', 7687)) (reason [WinError 10065] A socket operation was attempted to an unreachable host)"
+    },
+    "caveats": [],
+    "cold_start_ms": 312.41
+  },
+  "falkordb": {
+    "platform_key": "falkordb",
+    "platform_name": "FalkorDB",
+    "load": {
+      "wall_clock_seconds": 24.41,
+      "nodes_loaded": 74062,
+      "relationships_loaded": 150000,
+      "nodes_per_second": 3033.7,
+      "relationships_per_second": 6144.3,
+      "method": "FalkorDB Cypher UNWIND batch (1000 rows/batch)"
+    },
+    "traversals": {
+      "1_hop": {
+        "p50_ms": 1.1242000036872923,
+        "p95_ms": 2.09475499286782,
+        "mean_ms": 1.231542999157682,
+        "iterations": 100,
+        "errors": 0
+      },
+      "2_hop": {
+        "p50_ms": 3.385200005141087,
+        "p95_ms": 14.486674986255784,
+        "mean_ms": 5.725164000468794,
+        "iterations": 100,
+        "errors": 0
+      },
+      "3_hop": {
+        "p50_ms": 218.52740002213977,
+        "p95_ms": 834.4093000050634,
+        "mean_ms": 295.5031439548123,
+        "iterations": 91,
+        "errors": 9
+      }
+    },
+    "lookups": {
+      "point_lookup": {
+        "p50_ms": 1.4584000164177269,
+        "p95_ms": 3.9499849983258146,
+        "mean_ms": 1.7971759993815795,
+        "iterations": 100,
+        "errors": 0
+      },
+      "filtered_lookup": {
+        "p50_ms": 1.7626999906497076,
+        "p95_ms": 9.0484049913357,
+        "mean_ms": 2.8812939996714704,
+        "iterations": 100,
+        "errors": 0
+      }
+    },
+    "aggregations": {
+      "group_by_community": {
+        "p50_ms": 686.1950999882538,
+        "p95_ms": 824.5894349995069,
+        "mean_ms": 678.5976870002924,
+        "iterations": 100,
+        "errors": 0
+      }
+    },
+    "mixed_workload": {
+      "concurrency_1": {
+        "queries_per_second": 377.3666666666667,
+        "duration_seconds": 60,
+        "total_queries": 22642,
+        "errors": 0,
+        "concurrency": 1
+      },
+      "concurrency_10": {
+        "queries_per_second": 1094.45,
+        "duration_seconds": 60,
+        "total_queries": 65667,
+        "errors": 0,
+        "concurrency": 10
+      },
+      "concurrency_40": {
+        "queries_per_second": 967.75,
+        "duration_seconds": 60,
+        "total_queries": 58065,
+        "errors": 78,
+        "concurrency": 40
+      }
+    },
+    "footprint": {
+      "stored_data_size": "74,062 nodes, 150,000 relationships",
+      "memory_usage": "31.49M",
+      "instance_specs": "Docker 0.5 vCPU / 256 MB (see docker-compose.yml)",
+      "notes": ""
+    },
+    "caveats": [],
+    "cold_start_ms": 6.95
+  },
+  "memgraph": {
+    "platform_key": "memgraph",
+    "platform_name": "Memgraph",
+    "load": {
+      "wall_clock_seconds": 9.77,
+      "nodes_loaded": 74062,
+      "relationships_loaded": 150000,
+      "nodes_per_second": 7581.6,
+      "relationships_per_second": 15355.2,
+      "method": "Neo4j Python driver UNWIND batch MERGE (1000 rows/batch)"
+    },
+    "traversals": {
+      "1_hop": {
+        "p50_ms": 2.508350007701665,
+        "p95_ms": 4.893945016374346,
+        "mean_ms": 2.6704549984424375,
+        "iterations": 100,
+        "errors": 0
+      },
+      "2_hop": {
+        "p50_ms": 4.667700006393716,
+        "p95_ms": 16.644324982189566,
+        "mean_ms": 7.267866998736281,
+        "iterations": 100,
+        "errors": 0
+      },
+      "3_hop": {
+        "p50_ms": 86.20869999867864,
+        "p95_ms": 401.05893001309596,
+        "mean_ms": 119.98410600004718,
+        "iterations": 100,
+        "errors": 0
+      }
+    },
+    "lookups": {
+      "point_lookup": {
+        "p50_ms": 0.9272500028600916,
+        "p95_ms": 2.336560006369836,
+        "mean_ms": 1.131004999333527,
+        "iterations": 100,
+        "errors": 0
+      },
+      "filtered_lookup": {
+        "p50_ms": 1.47570000262931,
+        "p95_ms": 2.358044986613095,
+        "mean_ms": 1.571169999660924,
+        "iterations": 100,
+        "errors": 0
+      }
+    },
+    "aggregations": {
+      "group_by_community": {
+        "p50_ms": 290.0164000020595,
+        "p95_ms": 371.05621499649715,
+        "mean_ms": 281.4343310004915,
+        "iterations": 100,
+        "errors": 0
+      }
+    },
+    "mixed_workload": {
+      "concurrency_1": {
+        "queries_per_second": 363.15,
+        "duration_seconds": 60,
+        "total_queries": 21789,
+        "errors": 0,
+        "concurrency": 1
+      },
+      "concurrency_10": {
+        "queries_per_second": 889.1,
+        "duration_seconds": 60,
+        "total_queries": 53346,
+        "errors": 1,
+        "concurrency": 10
+      },
+      "concurrency_40": {
+        "queries_per_second": 1087.0666666666666,
+        "duration_seconds": 60,
+        "total_queries": 65224,
+        "errors": 4,
+        "concurrency": 40
+      }
+    },
+    "footprint": {
+      "stored_data_size": "74,062 nodes, 150,000 relationships (logical)",
+      "memory_usage": "capped at 256 MB via docker compose",
+      "instance_specs": "see config/platforms.yaml",
+      "notes": "Cloud consoles may expose additional metrics."
+    },
+    "caveats": [],
+    "cold_start_ms": 42.01
+  },
+  "neo4j": {
+    "platform_key": "neo4j",
+    "platform_name": "Neo4j Aura Free",
+    "load": {
+      "wall_clock_seconds": 24.47,
+      "nodes_loaded": 74062,
+      "relationships_loaded": 150000,
+      "nodes_per_second": 3026.9,
+      "relationships_per_second": 6130.4,
+      "method": "Neo4j Python driver UNWIND batch MERGE (1000 rows/batch)"
+    },
+    "traversals": {
+      "1_hop": {
+        "p50_ms": 52.111549986875616,
+        "p95_ms": 60.988370003178716,
+        "mean_ms": 53.57697299972642,
+        "iterations": 100,
+        "errors": 0
+      },
+      "2_hop": {
+        "p50_ms": 52.80574997595977,
+        "p95_ms": 58.91054998501203,
+        "mean_ms": 54.160120997112244,
+        "iterations": 100,
+        "errors": 0
+      },
+      "3_hop": {
+        "p50_ms": 70.79180001164787,
+        "p95_ms": 100.57094501680695,
+        "mean_ms": 73.10543399886228,
+        "iterations": 100,
+        "errors": 0
+      }
+    },
+    "lookups": {
+      "point_lookup": {
+        "p50_ms": 51.309600021340884,
+        "p95_ms": 101.07128000963712,
+        "mean_ms": 56.003048000857234,
+        "iterations": 100,
+        "errors": 0
+      },
+      "filtered_lookup": {
+        "p50_ms": 102.02925000339746,
+        "p95_ms": 163.8151800099874,
+        "mean_ms": 126.99414399889065,
+        "iterations": 100,
+        "errors": 0
+      }
+    },
+    "aggregations": {
+      "group_by_community": {
+        "p50_ms": 306.32234999211505,
+        "p95_ms": 364.69925000274077,
+        "mean_ms": 291.7961830008426,
+        "iterations": 100,
+        "errors": 0
+      }
+    },
+    "mixed_workload": {
+      "concurrency_1": {
+        "queries_per_second": 12.266666666666667,
+        "duration_seconds": 60,
+        "total_queries": 736,
+        "errors": 0,
+        "concurrency": 1
+      },
+      "concurrency_10": {
+        "queries_per_second": 167.26666666666668,
+        "duration_seconds": 60,
+        "total_queries": 10036,
+        "errors": 0,
+        "concurrency": 10
+      },
+      "concurrency_40": {
+        "queries_per_second": 607.6333333333333,
+        "duration_seconds": 60,
+        "total_queries": 36458,
+        "errors": 0,
+        "concurrency": 40
+      }
+    },
+    "footprint": {
+      "stored_data_size": "74,062 nodes, 150,000 relationships (logical)",
+      "memory_usage": "not observable (managed cloud)",
+      "instance_specs": "see config/platforms.yaml",
+      "notes": "Cloud consoles may expose additional metrics."
+    },
+    "caveats": [],
+    "cold_start_ms": 70.19
   }
 }

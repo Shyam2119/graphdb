@@ -1,0 +1,93 @@
+{
+  "cognodb": {
+    "platform_key": "cognodb",
+    "platform_name": "CognoDB Cloud",
+    "load": {
+      "wall_clock_seconds": 80.18,
+      "nodes_loaded": 74062,
+      "relationships_loaded": 150000,
+      "nodes_per_second": 923.7,
+      "relationships_per_second": 1870.8,
+      "method": "Neo4j Python driver UNWIND batch MERGE (1000 rows/batch)"
+    },
+    "traversals": {
+      "1_hop": {
+        "p50_ms": 252.29114999820013,
+        "p95_ms": 259.10036002023844,
+        "mean_ms": 253.4294159989804,
+        "iterations": 100,
+        "errors": 0
+      },
+      "2_hop": {
+        "p50_ms": 263.7484499864513,
+        "p95_ms": 379.4001150046824,
+        "mean_ms": 286.11007000057725,
+        "iterations": 100,
+        "errors": 0
+      },
+      "3_hop": {
+        "p50_ms": 2184.123199986061,
+        "p95_ms": 6306.8844699912,
+        "mean_ms": 2847.2189565174,
+        "iterations": 23,
+        "errors": 77
+      }
+    },
+    "lookups": {
+      "point_lookup": {
+        "p50_ms": 243.877649991191,
+        "p95_ms": 247.88254999293713,
+        "mean_ms": 254.90592083345595,
+        "iterations": 96,
+        "errors": 4
+      },
+      "filtered_lookup": {
+        "p50_ms": 245.98720000358298,
+        "p95_ms": 469.41240500163985,
+        "mean_ms": 277.3427850016742,
+        "iterations": 100,
+        "errors": 0
+      }
+    },
+    "aggregations": {
+      "group_by_community": {
+        "p50_ms": 2301.1328499997035,
+        "p95_ms": 2434.042229989427,
+        "mean_ms": 2311.50384599925,
+        "iterations": 100,
+        "errors": 0
+      }
+    },
+    "mixed_workload": {
+      "concurrency_1": {
+        "queries_per_second": 4.05,
+        "duration_seconds": 60,
+        "total_queries": 243,
+        "errors": 0,
+        "concurrency": 1
+      },
+      "concurrency_10": {
+        "queries_per_second": 39.3,
+        "duration_seconds": 60,
+        "total_queries": 2358,
+        "errors": 0,
+        "concurrency": 10
+      },
+      "concurrency_40": {
+        "queries_per_second": 123.56666666666666,
+        "duration_seconds": 60,
+        "total_queries": 7414,
+        "errors": 1318,
+        "concurrency": 40
+      }
+    },
+    "footprint": {
+      "stored_data_size": "not observable",
+      "memory_usage": "not observable",
+      "instance_specs": "see config/platforms.yaml",
+      "notes": "Couldn't connect to db-e01bc678.bravo.databases.cognodb.com:7687 (resolved to ('136.70.132.96:7687',)):\nFailed to establish connection to ResolvedIPv4Address(('136.70.132.96', 7687)) (reason [WinError 10065] A socket operation was attempted to an unreachable host)"
+    },
+    "caveats": [],
+    "cold_start_ms": 312.41
+  }
+}
