@@ -1,0 +1,93 @@
+{
+  "neo4j": {
+    "platform_key": "neo4j",
+    "platform_name": "Neo4j Aura Free",
+    "load": {
+      "wall_clock_seconds": 24.47,
+      "nodes_loaded": 74062,
+      "relationships_loaded": 150000,
+      "nodes_per_second": 3026.9,
+      "relationships_per_second": 6130.4,
+      "method": "Neo4j Python driver UNWIND batch MERGE (1000 rows/batch)"
+    },
+    "traversals": {
+      "1_hop": {
+        "p50_ms": 52.111549986875616,
+        "p95_ms": 60.988370003178716,
+        "mean_ms": 53.57697299972642,
+        "iterations": 100,
+        "errors": 0
+      },
+      "2_hop": {
+        "p50_ms": 52.80574997595977,
+        "p95_ms": 58.91054998501203,
+        "mean_ms": 54.160120997112244,
+        "iterations": 100,
+        "errors": 0
+      },
+      "3_hop": {
+        "p50_ms": 70.79180001164787,
+        "p95_ms": 100.57094501680695,
+        "mean_ms": 73.10543399886228,
+        "iterations": 100,
+        "errors": 0
+      }
+    },
+    "lookups": {
+      "point_lookup": {
+        "p50_ms": 51.309600021340884,
+        "p95_ms": 101.07128000963712,
+        "mean_ms": 56.003048000857234,
+        "iterations": 100,
+        "errors": 0
+      },
+      "filtered_lookup": {
+        "p50_ms": 102.02925000339746,
+        "p95_ms": 163.8151800099874,
+        "mean_ms": 126.99414399889065,
+        "iterations": 100,
+        "errors": 0
+      }
+    },
+    "aggregations": {
+      "group_by_community": {
+        "p50_ms": 306.32234999211505,
+        "p95_ms": 364.69925000274077,
+        "mean_ms": 291.7961830008426,
+        "iterations": 100,
+        "errors": 0
+      }
+    },
+    "mixed_workload": {
+      "concurrency_1": {
+        "queries_per_second": 12.266666666666667,
+        "duration_seconds": 60,
+        "total_queries": 736,
+        "errors": 0,
+        "concurrency": 1
+      },
+      "concurrency_10": {
+        "queries_per_second": 167.26666666666668,
+        "duration_seconds": 60,
+        "total_queries": 10036,
+        "errors": 0,
+        "concurrency": 10
+      },
+      "concurrency_40": {
+        "queries_per_second": 607.6333333333333,
+        "duration_seconds": 60,
+        "total_queries": 36458,
+        "errors": 0,
+        "concurrency": 40
+      }
+    },
+    "footprint": {
+      "stored_data_size": "74,062 nodes, 150,000 relationships (logical)",
+      "memory_usage": "not observable (managed cloud)",
+      "instance_specs": "see config/platforms.yaml",
+      "notes": "Cloud consoles may expose additional metrics."
+    },
+    "caveats": [],
+    "cold_start_ms": 70.19
+  }
+}
