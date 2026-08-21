@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import os
+from pathlib import Path
 
 import click
 from rich.console import Console
@@ -93,10 +94,9 @@ def report(output: str) -> None:
     console.print(f"[green]Charts: {Path(output) / 'charts'}[/green]")
 
 
-@app.command()
-def serve(
-    port: int = typer.Option(8080, "--port", "-p", help="Port to host the dashboard on"),
-) -> None:
+@main.command()
+@click.option("--port", "-p", default=8000, help="Port to host the dashboard on")
+def serve(port: int) -> None:
     """Launch the interactive Web Dashboard & Graph Visualizer."""
     import http.server
     import socketserver
@@ -110,17 +110,25 @@ def serve(
         def __init__(self, *args, **kwargs):
             super().__init__(*args, directory=str(web_dir), **kwargs)
 
-    with socketserver.TCPServer(("", port), Handler) as httpd:
-        url = f"http://localhost:{port}"
-        console.print(f"[bold cyan]🚀 GraphBench Web Dashboard running at {url}[/bold cyan]")
+    socketserver.TCPServer.allow_reuse_address = True
+    for p in range(port, port + 20):
         try:
-            webbrowser.open(url)
-        except Exception:
-            pass
-        try:
-            httpd.serve_forever()
-        except KeyboardInterrupt:
-            console.print("\n[yellow]Shutting down web server.[/yellow]")
+            httpd = socketserver.TCPServer(("", p), Handler)
+            url = f"http://localhost:{p}"
+            console.print(f"[bold cyan]GraphBench Web Dashboard running at {url}[/bold cyan]")
+            console.print("[dim]Press Ctrl+C to stop.[/dim]")
+            try:
+                webbrowser.open(url)
+            except Exception:
+                pass
+            try:
+                httpd.serve_forever()
+            except KeyboardInterrupt:
+                console.print("\n[yellow]Shutting down web server.[/yellow]")
+            return
+        except OSError:
+            continue
+    console.print(f"[red]Could not bind to any port between {port} and {port+20}[/red]")
 
 
 if __name__ == "__main__":
