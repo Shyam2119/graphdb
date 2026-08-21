@@ -8,7 +8,7 @@ import webbrowser
 import os
 from pathlib import Path
 
-PORT = 8080
+PORT = 8000
 DIRECTORY = Path(__file__).resolve().parent.parent / "web"
 
 class Handler(http.server.SimpleHTTPRequestHandler):
@@ -17,21 +17,27 @@ class Handler(http.server.SimpleHTTPRequestHandler):
 
 def main():
     os.chdir(DIRECTORY)
-    with socketserver.TCPServer(("", PORT), Handler) as httpd:
-        url = f"http://localhost:{PORT}"
-        print("=" * 60)
-        print(f"  🚀 GraphBench Interactive Web Explorer is running!")
-        print(f"  👉 Open in browser: {url}")
-        print(f"  Press Ctrl+C to stop the server.")
-        print("=" * 60)
+    socketserver.TCPServer.allow_reuse_address = True
+    for p in range(PORT, PORT + 20):
         try:
-            webbrowser.open(url)
-        except Exception:
-            pass
-        try:
-            httpd.serve_forever()
-        except KeyboardInterrupt:
-            print("\nShutting down server.")
+            httpd = socketserver.TCPServer(("", p), Handler)
+            url = f"http://localhost:{p}"
+            print("=" * 60)
+            print(f"  GraphBench Interactive Web Explorer is running!")
+            print(f"  Open in browser: {url}")
+            print("=" * 60)
+            try:
+                webbrowser.open(url)
+            except Exception:
+                pass
+            try:
+                httpd.serve_forever()
+            except KeyboardInterrupt:
+                print("\nShutting down server.")
+            return
+        except OSError:
+            continue
+    print(f"Error: Could not bind to any port between {PORT} and {PORT+20}")
 
 if __name__ == "__main__":
     main()
