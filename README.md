@@ -4,7 +4,8 @@ Reproducible comparison of **[CognoDB Cloud](https://cognodb.com)** against four
 
 Includes a **Full-Stack Interactive Web Dashboard & Physics Graph Visualizer** to explore live multi-hop traversals, benchmark analytics, and query simulations.
 
-> 🌐 **Interactive Web Application**: Run `graph-bench serve` or open [`web/index.html`](web/index.html) to launch the interactive UI dashboard locally or deploy with 1-click to Vercel/Netlify.
+> 🌐 **Live Web Application**: **[https://shyam2119.github.io/graphdb/](https://shyam2119.github.io/graphdb/)**  
+> *(Run locally with `graph-bench serve` or deploy with 1-click to Vercel/Netlify)*
 >
 > 📖 [Read the complete technical write-up →](ARTICLE.md)
 
