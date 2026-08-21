@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CognoDB & Graph DB Cloud Benchmark Explorer</title>
+  <!-- Google Fonts & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Background Glow FX -->
+  <div class="bg-glow bg-glow-1"></div>
+  <div class="bg-glow bg-glow-2"></div>
+  <div class="bg-glow bg-glow-3"></div>
+
+  <!-- Header -->
+  <header class="navbar">
+    <div class="nav-brand">
+      <div class="brand-logo">
+        <i class="fa-solid fa-circle-nodes"></i>
+      </div>
+      <div>
+        <h1 class="brand-title">GraphBench <span class="brand-badge">Cloud Suite</span></h1>
+        <p class="brand-subtitle">Empirical Comparison: CognoDB • Neo4j • Memgraph • FalkorDB • ArangoDB</p>
+      </div>
+    </div>
+    
+    <div class="nav-actions">
+      <div class="status-indicator">
+        <span class="pulse-dot"></span>
+        <span class="status-text">5/5 Platforms Benchmarked</span>
+      </div>
+      <a href="https://github.com/Shyam2119/graphdb" target="_blank" class="btn btn-github">
+        <i class="fa-brands fa-github"></i> View GitHub Repo
+      </a>
+    </div>
+  </header>
+
+  <!-- Top Metric Cards -->
+  <section class="kpi-strip">
+    <div class="kpi-card">
+      <div class="kpi-icon icon-cyan"><i class="fa-solid fa-bolt-lightning"></i></div>
+      <div class="kpi-data">
+        <span class="kpi-label">Top Ingest Throughput</span>
+        <span class="kpi-value">15,355 <small>rel/s</small></span>
+        <span class="kpi-sub">Memgraph (In-Memory Engine)</span>
+      </div>
+    </div>
+
+    <div class="kpi-card">
+      <div class="kpi-icon icon-purple"><i class="fa-solid fa-gauge-high"></i></div>
+      <div class="kpi-data">
+        <span class="kpi-label">Sub-2ms 1-Hop Latency</span>
+        <span class="kpi-value">1.1 <small>ms p50</small></span>
+        <span class="kpi-sub">FalkorDB (Redis Sparse Matrix)</span>
+      </div>
+    </div>
+
+    <div class="kpi-card">
+      <div class="kpi-icon icon-green"><i class="fa-solid fa-route"></i></div>
+      <div class="kpi-data">
+        <span class="kpi-label">Deep Traversal (3-Hop)</span>
+        <span class="kpi-value">70.8 <small>ms p50</small></span>
+        <span class="kpi-sub">Neo4j Aura (Path Pruning)</span>
+      </div>
+    </div>
+
+    <div class="kpi-card">
+      <div class="kpi-icon icon-orange"><i class="fa-solid fa-cloud"></i></div>
+      <div class="kpi-data">
+        <span class="kpi-label">CognoDB Bolt Free Tier</span>
+        <span class="kpi-value">123.6 <small>QPS Peak</small></span>
+        <span class="kpi-sub">c0 Instance (0.5 vCPU Burstable)</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Workspace Tabs -->
+  <main class="main-container">
+    <div class="tab-nav">
+      <button class="tab-btn active" data-tab="tab-graph">
+        <i class="fa-solid fa-diagram-project"></i> Interactive Graph Visualizer
+      </button>
+      <button class="tab-btn" data-tab="tab-charts">
+        <i class="fa-solid fa-chart-column"></i> Benchmark Analytics & Charts
+      </button>
+      <button class="tab-btn" data-tab="tab-cypher">
+        <i class="fa-solid fa-code"></i> Cypher Query Playground
+      </button>
+      <button class="tab-btn" data-tab="tab-architecture">
+        <i class="fa-solid fa-scale-balanced"></i> Architectural Comparison
+      </button>
+    </div>
+
+    <!-- TAB 1: GRAPH VISUALIZER -->
+    <div id="tab-graph" class="tab-pane active">
+      <div class="graph-workspace">
+        <div class="graph-canvas-container">
+          <canvas id="graphCanvas"></canvas>
+          
+          <div class="canvas-overlay-controls">
+            <button id="btnZoomIn" title="Zoom In"><i class="fa-solid fa-plus"></i></button>
+            <button id="btnZoomOut" title="Zoom Out"><i class="fa-solid fa-minus"></i></button>
+            <button id="btnResetView" title="Reset View"><i class="fa-solid fa-arrows-to-dot"></i></button>
+            <button id="btnTogglePhysics" title="Pause Physics"><i class="fa-solid fa-pause"></i></button>
+          </div>
+
+          <div class="canvas-legend">
+            <span class="legend-item"><span class="dot community-0"></span> Comm 0</span>
+            <span class="legend-item"><span class="dot community-1"></span> Comm 1</span>
+            <span class="legend-item"><span class="dot community-2"></span> Comm 2</span>
+            <span class="legend-item"><span class="dot community-3"></span> Comm 3</span>
+            <span class="legend-item"><span class="dot active-path"></span> Active Traversal</span>
+          </div>
+        </div>
+
+        <div class="graph-sidebar">
+          <div class="card sidebar-card">
+            <h3><i class="fa-solid fa-sliders"></i> Multi-Hop Traversal Simulator</h3>
+            <p class="text-muted">Select a start node and simulate multi-hop pointer chasing across the social network graph.</p>
+            
+            <div class="form-group">
+              <label for="nodeSelect">Select Start Node ID:</label>
+              <select id="nodeSelect" class="form-control"></select>
+            </div>
+
+            <div class="traversal-buttons">
+              <button class="btn btn-hop" data-hops="1">
+                <i class="fa-solid fa-user-group"></i> 1-Hop (Neighbors)
+              </button>
+              <button class="btn btn-hop" data-hops="2">
+                <i class="fa-solid fa-network-wired"></i> 2-Hop (Friends of Friends)
+              </button>
+              <button class="btn btn-hop" data-hops="3">
+                <i class="fa-solid fa-share-nodes"></i> 3-Hop (Deep Expansion)
+              </button>
+            </div>
+
+            <div class="live-traversal-metrics" id="traversalMetrics" style="display:none;">
+              <h4>Simulation Metrics</h4>
+              <div class="metric-row">
+                <span>Visited Nodes:</span> <strong id="metricVisitedNodes">0</strong>
+              </div>
+              <div class="metric-row">
+                <span>Traversed Edges:</span> <strong id="metricTraversedEdges">0</strong>
+              </div>
+              <div class="metric-row">
+                <span>Memgraph Latency (Est):</span> <span class="badge badge-success" id="metricMemgraph">2.5 ms</span>
+              </div>
+              <div class="metric-row">
+                <span>Neo4j Aura Latency (Est):</span> <span class="badge badge-info" id="metricNeo4j">52.1 ms</span>
+              </div>
+              <div class="metric-row">
+                <span>CognoDB Latency (Est):</span> <span class="badge badge-warning" id="metricCognoDB">252.3 ms</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="card sidebar-card">
+            <h3><i class="fa-solid fa-circle-info"></i> Node Inspector</h3>
+            <div id="nodeDetails">
+              <p class="text-muted">Click any node in the graph canvas or select above to inspect properties.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 2: BENCHMARK CHARTS -->
+    <div id="tab-charts" class="tab-pane">
+      <div class="charts-grid">
+        <div class="card chart-card">
+          <div class="chart-header">
+            <h3><i class="fa-solid fa-chart-line"></i> Multi-Hop Traversal Latency (p50 / p95)</h3>
+            <div class="chart-controls">
+              <button class="btn btn-xs active" data-metric-type="p50">p50 Latency</button>
+              <button class="btn btn-xs" data-metric-type="p95">p95 Latency</button>
+            </div>
+          </div>
+          <div class="chart-wrapper">
+            <canvas id="chartTraversal"></canvas>
+          </div>
+          <p class="chart-caption">Measures pointer-chasing and path cache performance across 1, 2, and 3 hops.</p>
+        </div>
+
+        <div class="card chart-card">
+          <div class="chart-header">
+            <h3><i class="fa-solid fa-users-rays"></i> Mixed Workload QPS vs Concurrency (c=1, 10, 40)</h3>
+          </div>
+          <div class="chart-wrapper">
+            <canvas id="chartQPS"></canvas>
+          </div>
+          <p class="chart-caption">Sustained 60s 80/20 Read/Write workload across 1, 10, and 40 concurrent client threads.</p>
+        </div>
+
+        <div class="card chart-card">
+          <div class="chart-header">
+            <h3><i class="fa-solid fa-file-import"></i> Data Loading Ingest Throughput (Relationships/s)</h3>
+          </div>
+          <div class="chart-wrapper">
+            <canvas id="chartIngest"></canvas>
+          </div>
+          <p class="chart-caption">Batch size 1,000 UNWIND MERGE transactions loading 150,000 edges.</p>
+        </div>
+
+        <div class="card chart-card">
+          <div class="chart-header">
+            <h3><i class="fa-solid fa-cubes"></i> Aggregations & Point Lookups (Latency in ms)</h3>
+          </div>
+          <div class="chart-wrapper">
+            <canvas id="chartLookups"></canvas>
+          </div>
+          <p class="chart-caption">Point lookup (`Person.id`) vs Full topological community scan (`count(DISTINCT)`).</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 3: CYPHER PLAYGROUND -->
+    <div id="tab-cypher" class="tab-pane">
+      <div class="playground-container">
+        <div class="card playground-sidebar">
+          <h3><i class="fa-solid fa-bookmark"></i> Pre-set Benchmark Queries</h3>
+          <p class="text-muted">Click any query below to load it into the playground runner.</p>
+          
+          <div class="preset-list">
+            <button class="preset-btn active" data-preset="1hop">
+              <div class="preset-title">1-Hop Friend Traversal</div>
+              <div class="preset-code">MATCH (n:Person {id: $id})-[:FRIEND]->(m) RETURN m.id</div>
+            </button>
+            <button class="preset-btn" data-preset="2hop">
+              <div class="preset-title">2-Hop Friend-of-Friend (FOAF)</div>
+              <div class="preset-code">MATCH (n:Person {id: $id})-[:FRIEND*2]->(m) RETURN DISTINCT m.id</div>
+            </button>
+            <button class="preset-btn" data-preset="3hop">
+              <div class="preset-title">3-Hop Deep Traversal</div>
+              <div class="preset-code">MATCH (n:Person {id: $id})-[:FRIEND*3]->(m) RETURN count(DISTINCT m)</div>
+            </button>
+            <button class="preset-btn" data-preset="agg">
+              <div class="preset-title">Community Group-By Aggregation</div>
+              <div class="preset-code">MATCH (n:Person)-[:FRIEND]-(m) RETURN n.community, count(m) ORDER BY count(m) DESC LIMIT 10</div>
+            </button>
+          </div>
+        </div>
+
+        <div class="playground-main">
+          <div class="card editor-card">
+            <div class="editor-header">
+              <span><i class="fa-solid fa-terminal"></i> Cypher Query Editor</span>
+              <div class="editor-meta">
+                <span class="tag">Dialect: openCypher / Bolt v4.4+</span>
+              </div>
+            </div>
+            <textarea id="cypherEditor" class="code-editor" spellcheck="false"></textarea>
+            
+            <div class="editor-footer">
+              <div class="param-inputs">
+                <label>Param <code>$id</code>:</label>
+                <input type="number" id="paramId" value="10" class="input-param">
+              </div>
+              <button id="btnRunQuery" class="btn btn-primary">
+                <i class="fa-solid fa-play"></i> Execute Query
+              </button>
+            </div>
+          </div>
+
+          <div class="card result-card">
+            <div class="result-header">
+              <h3><i class="fa-solid fa-table-list"></i> Query Execution Results</h3>
+              <span id="queryExecStats" class="text-muted">Click 'Execute Query' to evaluate</span>
+            </div>
+            <div id="queryResultContent" class="result-table-wrapper">
+              <table class="data-table" id="resultTable">
+                <thead><tr><th>#</th><th>Target Node ID</th><th>Relationship</th><th>Community</th><th>Execution Plan</th></tr></thead>
+                <tbody>
+                  <tr><td colspan="5" class="text-center text-muted">No query executed yet. Select a query and click Execute.</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 4: ARCHITECTURAL COMPARISON -->
+    <div id="tab-architecture" class="tab-pane">
+      <div class="card architecture-card">
+        <h2><i class="fa-solid fa-code-compare"></i> Compiler-Style Graph Engine Comparison</h2>
+        <p class="lead">Evaluating graph databases like compilers: examining storage layout, index structures, pointer chasing efficiency, and free tier throttling ceilings.</p>
+
+        <div class="arch-table-wrapper">
+          <table class="data-table arch-table">
+            <thead>
+              <tr>
+                <th>Platform</th>
+                <th>Storage Engine</th>
+                <th>Query Language</th>
+                <th>Network Transport</th>
+                <th>Ingest Speed</th>
+                <th>1-Hop Latency</th>
+                <th>3-Hop Latency</th>
+                <th>Mixed QPS (c=40)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Memgraph</strong></td>
+                <td>In-Memory C++ Adjacency List</td>
+                <td>Cypher (openCypher)</td>
+                <td>Localhost Bolt</td>
+                <td><span class="badge badge-success">15,355 rel/s</span></td>
+                <td><span class="badge badge-success">2.5 ms</span></td>
+                <td>86.2 ms</td>
+                <td><span class="badge badge-success">1,087.1 QPS</span></td>
+              </tr>
+              <tr>
+                <td><strong>FalkorDB</strong></td>
+                <td>Redis GraphBLAS Sparse Matrix</td>
+                <td>Cypher Subset</td>
+                <td>Localhost RESP / Bolt</td>
+                <td>6,144 rel/s</td>
+                <td><span class="badge badge-success">1.1 ms</span></td>
+                <td>218.5 ms</td>
+                <td>967.8 QPS</td>
+              </tr>
+              <tr>
+                <td><strong>Neo4j Aura</strong></td>
+                <td>Native Property Graph + Page Cache</td>
+                <td>Cypher</td>
+                <td>Cloud TLS Bolt</td>
+                <td>6,130 rel/s</td>
+                <td>52.1 ms</td>
+                <td><span class="badge badge-success">70.8 ms</span></td>
+                <td>607.6 QPS (0 err)</td>
+              </tr>
+              <tr>
+                <td><strong>ArangoDB</strong></td>
+                <td>RocksDB Document + Edge Indices</td>
+                <td>AQL</td>
+                <td>Localhost HTTP / VelocyPack</td>
+                <td>8,580 rel/s</td>
+                <td>50.0 ms</td>
+                <td>1,289.9 ms</td>
+                <td>397.8 QPS (0 err)</td>
+              </tr>
+              <tr>
+                <td><strong>CognoDB Cloud</strong></td>
+                <td>Cloud Native Bolt Engine</td>
+                <td>Cypher (Neo4j Compatible)</td>
+                <td>Cloud TLS Bolt (us-east4)</td>
+                <td>1,871 rel/s</td>
+                <td>252.3 ms</td>
+                <td>2,184.1 ms</td>
+                <td>123.6 QPS</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="insights-grid">
+          <div class="insight-box">
+            <h4><i class="fa-solid fa-network-wired"></i> WAN Transport Floor</h4>
+            <p>Cloud instances (Neo4j Aura and CognoDB Cloud) incur physical network latency (50ms - 240ms RTT) compared to in-process Unix domain sockets. The benchmark isolates this by measuring cold-start and local vs cloud baseline.</p>
+          </div>
+          <div class="insight-box">
+            <h4><i class="fa-solid fa-tree"></i> Deep Path Pruning</h4>
+            <p>At 3-hop depth, dense subgraphs experience combinatorial explosion. Neo4j's planner pruned intermediate path states effectively (70.8ms), while scan-based engines experienced higher latency.</p>
+          </div>
+          <div class="insight-box">
+            <h4><i class="fa-solid fa-microchip"></i> Hardware Parity (0.5 vCPU)</h4>
+            <p>Every self-hosted database was strictly bounded to 0.5 vCPU and 256 MB RAM using Docker cgroups to ensure 100% fair evaluation against the free tier envelopes of managed cloud providers.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p>CognoDB Cloud Benchmarking & Interactive Graph Explorer Suite • Created for Wexa AI Take-Home Assessment • Author: <strong>Shyam Pattipu</strong></p>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

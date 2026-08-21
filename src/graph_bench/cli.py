@@ -93,5 +93,35 @@ def report(output: str) -> None:
     console.print(f"[green]Charts: {Path(output) / 'charts'}[/green]")
 
 
+@app.command()
+def serve(
+    port: int = typer.Option(8080, "--port", "-p", help="Port to host the dashboard on"),
+) -> None:
+    """Launch the interactive Web Dashboard & Graph Visualizer."""
+    import http.server
+    import socketserver
+    import webbrowser
+    import os
+
+    web_dir = Path(__file__).resolve().parent.parent.parent / "web"
+    os.chdir(web_dir)
+
+    class Handler(http.server.SimpleHTTPRequestHandler):
+        def __init__(self, *args, **kwargs):
+            super().__init__(*args, directory=str(web_dir), **kwargs)
+
+    with socketserver.TCPServer(("", port), Handler) as httpd:
+        url = f"http://localhost:{port}"
+        console.print(f"[bold cyan]🚀 GraphBench Web Dashboard running at {url}[/bold cyan]")
+        try:
+            webbrowser.open(url)
+        except Exception:
+            pass
+        try:
+            httpd.serve_forever()
+        except KeyboardInterrupt:
+            console.print("\n[yellow]Shutting down web server.[/yellow]")
+
+
 if __name__ == "__main__":
     main()

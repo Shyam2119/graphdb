@@ -1,8 +1,20 @@
-# Graph Database Cloud Benchmarking
+# Graph Database Cloud Benchmarking & Interactive Explorer Suite
 
 Reproducible comparison of **[CognoDB Cloud](https://cognodb.com)** against four other graph databases on the **same dataset**, **same workloads**, and **same resource envelope**.
 
-This is an honest methodology repo — not a leaderboard. The assignment is to measure fairly and explain the numbers. [Read the full write-up →](ARTICLE.md)
+Includes a **Full-Stack Interactive Web Dashboard & Physics Graph Visualizer** to explore live multi-hop traversals, benchmark analytics, and query simulations.
+
+> 🌐 **Interactive Web Application**: Run `graph-bench serve` or open [`web/index.html`](web/index.html) to launch the interactive UI dashboard locally or deploy with 1-click to Vercel/Netlify.
+>
+> 📖 [Read the complete technical write-up →](ARTICLE.md)
+
+## 🌟 Interactive Web Dashboard Features
+
+- 🔮 **Force-Directed Graph Canvas**: Interactive particle physics graph visualization with zoom/pan and node inspection.
+- ⚡ **Multi-Hop Traversal Simulator**: Live visual path expansion for 1-hop, 2-hop, and 3-hop graph queries.
+- 📊 **Interactive Benchmark Analytics**: Switch between p50/p95 latency curves, concurrency sweeps (c=1, 10, 40), and ingest throughput.
+- 💻 **Cypher Query Playground**: Live query evaluator with parameter inputs and execution plan breakdowns.
+- ⚖️ **Architectural Matrix**: Compiler-style feature and resource envelope inspector.
 
 ## What this suite measures
 
@@ -57,6 +69,7 @@ docker compose up -d            # Memgraph, FalkorDB, ArangoDB (capped)
 graph-bench prepare             # download / sample the dataset
 graph-bench run                 # load + warm-up + all workloads
 graph-bench report              # results/REPORT.md + charts
+graph-bench serve               # launch interactive Web UI at http://localhost:8080
 ```
 
 No credentials yet? Validate the harness:
