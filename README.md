@@ -260,11 +260,15 @@ pip install pytest
 pytest -q
 ```
 
-## Submit
+## Live Web Application
 
-1. Push this repo to GitHub (public, or private with access for Wexa).
-2. Email **hr@wexa.ai** with subject `CognoDB Assignment 1 – <Your Name>` and the repository URL.
+- **Production URL**: [https://shyam2119.github.io/graphdb/](https://shyam2119.github.io/graphdb/)
+- **Local Runner**: `graph-bench serve` (launches at `http://localhost:8000`)
+
+## Author
+
+**Shyam Pattipu** — [GitHub Profile](https://github.com/Shyam2119)
 
 ## License
 
-MIT. SNAP data remains under SNAP’s terms; we only redistribute sampled CSVs you generate locally.
+MIT. SNAP data remains under SNAP’s terms; we only redistribute sampled CSVs generated locally.
